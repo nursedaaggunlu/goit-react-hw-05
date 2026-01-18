@@ -1,0 +1,17 @@
+.form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.input {
+  padding: 8px;
+  font-size: 16px;
+  flex: 1;
+}
+
+.button {
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
