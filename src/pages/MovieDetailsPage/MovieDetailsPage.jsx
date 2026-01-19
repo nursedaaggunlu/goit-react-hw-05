@@ -1,13 +1,13 @@
 import { useParams, useLocation, Link, Outlet } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { fetchMovieDetails } from "../../services/tmdbApi";
+import { useEffect, useState, useRef } from "react";
+import { fetchMovieDetails, getImageUrl } from "../../services/tmdbApi";
 import css from "./MovieDetailsPage.module.css";
-import { getImageUrl } from "../../services/tmdbApi";
 
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
   const location = useLocation();
-  const backLink = location.state?.from ?? "/movies";
+
+  const backLinkRef = useRef(location.state?.from ?? "/movies");
 
   const [movie, setMovie] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +39,7 @@ export default function MovieDetailsPage() {
 
   return (
     <main>
-      <Link to={backLink} className={css.backLink}>
+      <Link to={backLinkRef.current} className={css.backLink}>
         ← Go back
       </Link>
 
@@ -74,14 +74,18 @@ export default function MovieDetailsPage() {
       <h3 className={css.subTitle}>Additional information</h3>
       <ul className={css.infoList}>
         <li>
-          <Link to="cast" state={{ from: backLink }} className={css.infoLink}>
+          <Link
+            to="cast"
+            state={{ from: backLinkRef.current }}
+            className={css.infoLink}
+          >
             Cast
           </Link>
         </li>
         <li>
           <Link
             to="reviews"
-            state={{ from: backLink }}
+            state={{ from: backLinkRef.current }}
             className={css.infoLink}
           >
             Reviews
